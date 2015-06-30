@@ -37,6 +37,7 @@ module Butterknife
       puts "Couldn't check for Toast Updates. You might not be connected to the internet :(".red
       if ENV["TOAST_LOCAL"] == "NONE"
         puts "No local Toast Files found... Installer cannot continue.".red
+        gets
         exit
       end
     end
