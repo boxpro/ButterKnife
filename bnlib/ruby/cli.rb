@@ -31,8 +31,15 @@ module Butterknife
     puts File.read("#{LIBHOME}/ruby/splash.txt").format
     puts "\t\tToast ButterKnife CLI\n".green
     require_relative "fetch/toast"
-    Butterknife::Fetch::Toast.download_latest
-
+    begin
+      Butterknife::Fetch::Toast.download_latest
+    rescue
+      puts "Couldn't check for Toast Updates. You might not be connected to the internet :(".red
+      if ENV["TOAST_LOCAL"] == "NONE"
+        puts "No local Toast Files found... Installer cannot continue.".red
+        exit
+      end
+    end
     echo_options
 
   end

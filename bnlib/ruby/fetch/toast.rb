@@ -8,10 +8,12 @@ module Butterknife
     class Toast
 
       def self.download_latest
+        ENV["TOAST_LOCAL"] = "INSTALLED"
         puts "Checking for Toast Version...<cyan>".format
         update = !(File.exist? "bnlib/meta.txt")
         if update
           puts "No local Toast Installation found... Updating...".cyan
+          ENV["TOAST_LOCAL"] = "NONE"
           dl; return
         end
 
