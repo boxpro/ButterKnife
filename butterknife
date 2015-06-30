@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+module Butterknife
+  LIBHOME = "bnlib"
+
+  if ARGV.length > 0
+    if ARGV[0] == "-build"
+      exec "ruby bnlib/build/ocra.rb"
+    end
+  end
+
+  def Butterknife.lib name
+    File.join File.absolute_path(LIBHOME), "ruby/#{name}"
+  end
+
+  def Butterknife.gemload name
+    libroot = File.join File.absolute_path(LIBHOME), "rblib/"
+    $:.unshift Dir[libroot + "#{name}-*/lib"][0]
+  end
+
+  gemload "net-ssh"
+  gemload "net-scp"
+  require lib "cli"
+end
