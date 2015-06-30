@@ -6,8 +6,8 @@ trap("INT") {exit}
 
 module Butterknife
   DEPLOYMENT_METHODS = {
-    "USB Drive Deployment": "usb.rb",
     "USB Tether Deployment": "usb_t.rb",
+    "USB Drive Deployment": "usb.rb",
     "Network Deployment": "network.rb"
   }
 
