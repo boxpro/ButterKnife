@@ -1,6 +1,7 @@
 require_relative 'pretty.rb'
 require_relative 'util'
 require 'rubygems'
+require 'optparse'
 
 trap("INT") {exit}
 
@@ -10,6 +11,12 @@ module Butterknife
     "USB Drive Deployment": "usb.rb",
     "Network Deployment": "network.rb"
   }
+
+  OPTIONS = { pre: false }
+
+  def Butterknife.options
+    OPTIONS
+  end
 
   class CLI
     def self.echo_options
@@ -27,6 +34,10 @@ module Butterknife
         require_relative "deploy/#{option}"
       end
     end
+
+    OptionParser.new do |o|
+      o.on('-p', '--prerelease', 'Download the latest PreRelease (dev version) of Toast') { OPTIONS[:pre] = true }
+    end.parse!
 
     puts File.read("#{LIBHOME}/ruby/splash.txt").format
     puts "\t\tToast ButterKnife CLI\n".green

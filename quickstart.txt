@@ -5,6 +5,9 @@
 == LINUX / MAC
   Open a command prompt and run 'ruby butterknife'. The utility will explain the rest
 
+== Pre-Releases
+  Run Butterknife with the option "-p" to download and deploy Toast pre-releases
+  
 == DEPLOYMENT METHODS
   = Starting
     Whenever you run the installer, we will check for the latest download of Toast. Because of this,

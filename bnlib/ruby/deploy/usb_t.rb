@@ -9,7 +9,7 @@ module Butterknife
 
       IP_ADDR = "172.22.11.2"
       begin
-        Net::SCP.upload!(IP_ADDR, "lvuser", "bnlib/bin/root/.", "/", :recursive => true)
+        Net::SCP.upload!(IP_ADDR, "admin", "bnlib/bin/root/.", "/", :recursive => true, :ssh => { :password => "" })
       rescue => e
         puts "Something went wrong during deployment... Are you sure your RoboRIO is plugged in?".red
         puts e
