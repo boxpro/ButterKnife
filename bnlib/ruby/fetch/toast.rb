@@ -12,19 +12,19 @@ module Butterknife
         pre = Butterknife.options[:pre]
         puts "Checking for Toast#{pre ? ' Pre-Release' : ''} Version...<cyan>".format
         update = !(File.exist? "bnlib/meta.txt")
-        if update
-          puts "No local Toast Installation found... Updating...".cyan
-          ENV["TOAST_LOCAL"] = "NONE"
-          dl; return
-        end
 
         latest = "https://dev.imjac.in/toast/latest.php"
         latest += "?pre=true" if pre
         latest_dl = latest
         latest_dl += "#{pre ? '&' : '?'}dl=true"
 
+        if update
+          puts "No local Toast Installation found... Updating...".cyan
+          ENV["TOAST_LOCAL"] = "NONE"
+          dl(latest, latest_dl); return
+        end
+
         stored_version = File.read("bnlib/meta.txt")
-        latest = open(latest, NO_VERIFY).read
         puts "Latest Toast Version:<green> #{latest}<cyan>, Local: <green>#{stored_version}<cyan>".format
 
         unless stored_version == latest

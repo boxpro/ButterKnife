@@ -43,8 +43,14 @@ module Butterknife
     puts "\t\tToast ButterKnife CLI\n".green
     require_relative "fetch/toast"
     begin
+      ENV["TOAST_LOCAL"] = "NONE"
       Butterknife::Fetch::Toast.download_latest
     rescue
+      message = "#{$@.first}: #{$!.message} (#{$!.class})"
+      trace = $@.drop(1).map{|s| "\t#{s}"}
+
+      File.write("exception.txt", "#{message}\n#{trace.join("\n")}")
+
       puts "Couldn't check for Toast Updates. You might not be connected to the internet :(".red
       if ENV["TOAST_LOCAL"] == "NONE"
         puts "No local Toast Files found... Installer cannot continue.".red
