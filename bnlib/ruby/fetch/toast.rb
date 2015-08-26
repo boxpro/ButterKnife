@@ -18,6 +18,8 @@ module Butterknife
         latest_dl = latest
         latest_dl += "#{pre ? '&' : '?'}dl=true"
 
+        latestvers = open(latest, NO_VERIFY).read
+
         if update
           puts "No local Toast Installation found... Updating...".cyan
           ENV["TOAST_LOCAL"] = "NONE"
@@ -25,9 +27,9 @@ module Butterknife
         end
 
         stored_version = File.read("bnlib/meta.txt")
-        puts "Latest Toast Version:<green> #{latest}<cyan>, Local: <green>#{stored_version}<cyan>".format
+        puts "Latest Toast Version:<green> #{latestvers}<cyan>, Local: <green>#{stored_version}<cyan>".format
 
-        unless stored_version == latest
+        unless stored_version == latestvers
           puts "Toast Version out of date! Would you like to update? <red>(Y/N)<cyan>".format
           input = gets.chop!
           if input =~ /y(es)?/i || input =~ //
