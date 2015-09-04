@@ -1,7 +1,5 @@
 require 'open-uri'
-require 'openssl'
 require 'fileutils'
-NO_VERIFY =  {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}
 
 module Butterknife
   module Fetch
@@ -13,12 +11,12 @@ module Butterknife
         puts "Checking for Toast#{pre ? ' Pre-Release' : ''} Version...<cyan>".format
         update = !(File.exist? "bnlib/meta.txt")
 
-        latest = "https://dev.imjac.in/toast/latest.php"
+        latest = "http://dev.imjac.in/toast/latest.php"
         latest += "?pre=true" if pre
         latest_dl = latest
         latest_dl += "#{pre ? '&' : '?'}dl=true"
 
-        latestvers = open(latest, NO_VERIFY).read
+        latestvers = open(latest).read
 
         if update
           puts "No local Toast Installation found... Updating...".cyan
@@ -45,11 +43,11 @@ module Butterknife
         target += "FRCUserProgram.jar"
         File.delete target if File.exist? target
         File.open(target, "wb") do |local_file|
-          open(latest_dl, "rb", ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE) do |read_file|
+          open(latest_dl, "rb") do |read_file|
             local_file.write(read_file.read)
           end
         end
-        dl_vers = open(latest, NO_VERIFY).read
+        dl_vers = open(latest).read
         File.write("bnlib/meta.txt", dl_vers)
         puts "Successfully downloaded Toast #{dl_vers}".cyan
       end
